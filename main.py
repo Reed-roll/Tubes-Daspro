@@ -1,6 +1,6 @@
 import load
 from commands import run
-from type import *
+from base import *
 
 users = load.users # matriks data user
 temples = load.temples # matriks data candi

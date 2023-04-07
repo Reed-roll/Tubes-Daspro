@@ -8,9 +8,13 @@ State = list[list[User], list[Temple], list[Material], User]
 # DEFINISI KONSTANTA
 MAX_USER = 102 # 100 jin + roro + bondo
 MAX_TEMPLE = 100 # lebih dari 100 tidak disimpan
-MAX_MATERIALS = 3 # pasir, batu, air
 
 # asumsi username tidak boleh memiliki whitespace sebelum karakter pertama
 ANON = [" ", " ", " "] # pengguna belum login
 USER_MARK = [" MARK", "ZUCKER", "BERG"] # mark pengguna berupa seorang alien
+
 TEMPLES_MARK = [-1, "Malin Kundang", "0", "0", "0"] # mark candi berupa sebuah gunung
+
+DEFAULT_MATERIALS = [["pasir", "pasir pantai Nyi Roro Kidul", 0],
+                    ["batu", "batu dari Mars", 0],
+                    ["air", "Nyi Roro Kidul bath water (air Laut Selatan)"]]

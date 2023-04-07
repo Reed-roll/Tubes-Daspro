@@ -1,4 +1,4 @@
-from type import *
+from base import *
 from util import split_n
 import argparse
 import os
@@ -30,9 +30,7 @@ users = [USER_MARK for i in range(MAX_USER)]
 temples = [TEMPLES_MARK for i in range(MAX_TEMPLE)] 
 
 # array bahan-bahan bangunan
-materials  = [["pasir", "pasir pantai Nyi Roro Kidul", 0],
-              ["batu", "batu dari Mars", 0],
-              ["air", "Nyi Roro Kidul bath water (air Laut Selatan)"]]
+materials  = DEFAULT_MATERIALS
 
 # pengen dijadiin prosedur tapi tipe list inputnya beda-beda ...
 # data pengguna - list[ list[str, str, str] ]

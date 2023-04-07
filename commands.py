@@ -1,4 +1,4 @@
-from type import *
+from base import *
 
 def run(command: str, state: State) -> int:
     if command == "exit":
