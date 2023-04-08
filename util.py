@@ -1,3 +1,5 @@
+# berisi fungsi2 utility untuk pemrosesan data secara general
+
 def split_n(s: str, n: int, sep: str) -> list[str]:
     # memisahkan s menjadi n bagian
     # s adalah string yang akan dipecah

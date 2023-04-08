@@ -1,3 +1,4 @@
+# import untuk typing fungsi atau mengunakan konstanta
 # DEFINISI TIPE
 User = list[str, str, str] # (username, password, role)
 Temple = list[int, str, int, int, int] # (id, pembuat, pasir, batu, air)

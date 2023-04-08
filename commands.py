@@ -1,6 +1,10 @@
 from base import *
 
 def run(command: str, state: State) -> int:
+    # menerima command yang diberikan dan state program
+    # fungsi-fungsi spesifikasi memanipulasi state program lewat side effects
+    # nilai return adalah -1 (keluar), 0 (normal), 1 (kesalahan)
+    
     if command == "exit":
         return -1
     elif command == "login":
@@ -41,6 +45,7 @@ def login(state: State) -> int:
 def logout(state: State) -> int:
     if state[3][0] == ANON[0]:
         print("Pengguna belum login!")
+        return 1
     
     state[3] = ANON
     return 0
