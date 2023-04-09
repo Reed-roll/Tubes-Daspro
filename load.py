@@ -3,6 +3,18 @@ from util import split_n
 import argparse
 import os
 
+def get_arr(file: str, n: int, max: int) -> list[list[str]]:
+    res = [["__EOF__" for i in range(n)] for j in range(max)]
+    
+    with open(os.path.join(folder_path, file)) as f:
+        f.readline()
+        i = 0
+        for line in f:
+            res[i] = split_n(line, n, ";")
+            i += 1
+            
+    return res
+
 root = os.path.dirname(os.path.realpath(__file__))
 
 parser = argparse.ArgumentParser()
@@ -32,32 +44,28 @@ temples = [TEMPLES_MARK for i in range(MAX_TEMPLE)]
 # array bahan-bahan bangunan
 materials  = DEFAULT_MATERIALS
 
-# pengen dijadiin prosedur tapi tipe list inputnya beda-beda ...
-# data pengguna - list[ list[str, str, str] ]
-with open(os.path.join(folder_path, "user.csv")) as f:
-    f.readline()
-    i = 0
-    for line in f:
-        users[i] = split_n(line, 3, ";")
-        i += 1
+# data pengguna
+t_users = get_arr("user.csv", 3, MAX_USER)
+i = 0
+while t_users[i][0] != "__EOF__":
+    users[i] = User(t_users[i][0], t_users[i][1], t_users[i][2])
+    i += 1
         
-# data candi - list[ list[int, str, int, int, int] ]
-with open(os.path.join(folder_path, "candi.csv")) as f:
-    f.readline()
-    i = 0
-    for line in f:
-        temp = split_n(line, 5, ";")
-        temples[i] = [int(temp[0]), temp[1], int(temp[2]), int(temp[3]), int(temp[4])]
-        i += 1
+# data candi
+t_temples = get_arr("candi.csv", 5, MAX_TEMPLE)
+i = 0
+while t_temples[i][0] != "__EOF__":
+    temples[i] = Temple(int(t_temples[i][0]), t_temples[i][1],
+                        int(t_temples[i][2]), int(t_temples[i][3]), int(t_temples[i][4]))
+    i += 1
 
-# data bahan-bahan - list[ list[str, str, int] ]
-with open(os.path.join(folder_path, "bahan_bangunan.csv")) as f:
-    f.readline()
-    i = 0
-    for line in f:
-        temp = split_n(line, 3, ";")
-        materials[i] = [temp[0], temp[1], int(temp[2])]
-        i += 1
-        
+# data bahan-bahan
+
+t_materials = get_arr("bahan_bangunan.csv", 5, MAX_TEMPLE)
+i = 0
+while t_materials[i][0] != "__EOF__":
+    materials[i] = Material(t_materials[i][0], t_materials[i][1], int(t_materials[i][2]))
+    i += 1
+
 print("Selamat datang di program \"Manajerial Candi\"")
 print("Silahkan masukkan username Anda")

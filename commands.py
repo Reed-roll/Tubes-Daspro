@@ -17,9 +17,9 @@ def run(command: str, state: State) -> int:
         return 1
 
 def login(state: State) -> int:
-    users = state[0]
+    users = state.users
     
-    if state[3][0] != ANON[0]:
+    if state.c_user.username != ANON.username:
         print("Pengguna sudah login!")
         return 1
     
@@ -27,11 +27,11 @@ def login(state: State) -> int:
     password = input("Password: ")
 
     i = 0
-    while users[i][0] != USER_MARK[0]:
-        if username == users[i][0]:
-            if password == users[i][1]:
-                state[3] = users[i]
-                print(f"Selamat datang, {state[3][0]}!")
+    while users[i].username != USER_MARK.username:
+        if username == users[i].username:
+            if password == users[i].password:
+                state.c_user = users[i]
+                print(f"Selamat datang, {state.c_user.username}!")
                 print("Masukkan command “help” untuk daftar command yang dapat kamu panggil.")
                 return 0
             else:
@@ -43,9 +43,9 @@ def login(state: State) -> int:
     return 1
 
 def logout(state: State) -> int:
-    if state[3][0] == ANON[0]:
+    if state.c_user.username == ANON.username:
         print("Pengguna belum login!")
         return 1
     
-    state[3] = ANON
+    state.c_user = ANON
     return 0
