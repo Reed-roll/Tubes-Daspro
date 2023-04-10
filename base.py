@@ -32,15 +32,16 @@ class State:
         self.c_user = c_user # current user
 
 # DEFINISI KONSTANTA
-MAX_USER = 102 # 100 jin + roro + bondo
-MAX_TEMPLE = 100 # lebih dari 100 tidak disimpan
+MAX_USER = 103 # 100 jin + roro + bondo + 1 MARK
+MAX_TEMPLE = 101 # lebih dari 100 tidak disimpan + 1 MARK
 
 # asumsi username tidak boleh memiliki whitespace sebelum karakter pertama
 ANON = User(" ", " ", " ") # pengguna belum login
 USER_MARK = User(" MARK", "ZUCKER", "BERG") # mark pengguna berupa seorang alien
 
-TEMPLES_MARK = Temple(-1, "Malin Kundang", 0, 0, 0) # mark candi berupa sebuah gunung
+TEMPLE_MARK = Temple(-1, "Malin Kundang", 0, 0, 0) # mark candi berupa sebuah gunung
 
 DEFAULT_MATERIALS = [Material("pasir", "pasir pantai Nyi Roro Kidul", 0),
                      Material("batu", "batu dari Mars", 0),
                      Material("air", "Nyi Roro Kidul bath water (air Laut Selatan)", 0)]
+MATERIALS_COUNT = 3 # untuk for loop
