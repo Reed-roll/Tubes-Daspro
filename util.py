@@ -38,4 +38,6 @@ def  hitungJumlah(data : list,index : int,n : int):
         jumlah += data[i][index]
 
     return jumlah
+
+
     
