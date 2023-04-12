@@ -2,12 +2,12 @@ import data
 from commands import run
 from base import *
 
-users = data.users # matriks data user
-temples = data.temples # matriks data candi
-materials = data.materials # data bahan bangunan
+t_user = data.t_user # tabel data user
+t_temple = data.t_temple # tabel data candi
+t_material = data.t_material # tabel bahan bangunan
 
 c_user = ANON # current user, anggap username " " jika belum login
-state = State(users, temples, materials, c_user) # state program untuk di-pass ke command yang dijalankan
+state = State(t_user, t_temple, t_material, c_user) # state program untuk di-pass ke command yang dijalankan
 
 # main loop
 while True:

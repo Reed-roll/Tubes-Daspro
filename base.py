@@ -23,17 +23,43 @@ class Material:
         self.description = description
         self.quantity = quantity
 
-class State:
-    def __init__(self, users: list[User], temples: list[Temple],
-                 materials: list[Material], c_user: User) -> None:
+# NOTE: perhitungan panjang tabel MENCAKUP MARK (elemen kosong)
+
+# NOTE: untuk menambahkan elemen pada tabel,
+#       lakukan while loop hingga bertemu MARK dan ambil indeksnya
+#       isi indeks tersebut dengan elemen yang ditambahkan
+
+# NOTE: jika penambahan elemen terjadi pada: 
+#       index > length - 1, TAMBAHKAN length tabel
+#       JANGAN ditambah jika: index < length - 1
+
+class TabUser:
+    def __init__(self, users: list[User], length: int) -> None:
         self.users = users
+        self.length = length
+        
+class TabTemple:
+    def __init__(self, temples: list[Temple], length: int) -> None:
         self.temples = temples
+        self.length = length
+        
+class TabMaterial:
+    def __init__(self, materials: list[Material], length: int) -> None:
         self.materials = materials
+        self.length = length
+
+class State:
+    def __init__(self, t_user: TabUser, t_temple: TabTemple,
+                 t_material: TabMaterial, c_user: User) -> None:
+        self.t_user = t_user
+        self.t_temple = t_temple
+        self.t_material = t_material
         self.c_user = c_user # current user
+    
 
 # DEFINISI KONSTANTA
-MAX_USER = 103 # 100 jin + roro + bondo + 1 MARK
-MAX_TEMPLE = 101 # lebih dari 100 tidak disimpan + 1 MARK
+MAX_USER = 102 # 100 jin + roro + bondo
+MAX_TEMPLE = 100 # lebih dari 100 tidak disimpan
 
 # asumsi username tidak boleh memiliki whitespace sebelum karakter pertama
 ANON = User(" ", " ", " ") # pengguna belum login
@@ -45,3 +71,4 @@ DEFAULT_MATERIALS = [Material("pasir", "pasir pantai Nyi Roro Kidul", 0),
                      Material("batu", "batu dari Mars", 0),
                      Material("air", "Nyi Roro Kidul bath water (air Laut Selatan)", 0)]
 MATERIALS_COUNT = 3 # untuk for loop
+DEFAULT_TAB_MATERIALS = TabMaterial(DEFAULT_MATERIALS, MATERIALS_COUNT)

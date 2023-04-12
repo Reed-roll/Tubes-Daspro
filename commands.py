@@ -60,7 +60,8 @@ def exit(state: State) -> None:
         quit()
 
 def login(state: State) -> int:
-    users = state.users
+    users = state.t_user.users
+    n = state.t_user.length
     
     if state.c_user.username != ANON.username:
         print("Pengguna sudah login!")
@@ -69,9 +70,10 @@ def login(state: State) -> int:
     username = input("Username: ")
     password = input("Password: ")
 
-    i = 0
-    while users[i].username != USER_MARK.username:
-        if username == users[i].username:
+    # contoh loop setelah penggunaan tabel
+    for i in range(n):
+        if (users[i].username != USER_MARK.username
+        and username == users[i].username):
             if password == users[i].password:
                 state.c_user = users[i]
                 print(f"Selamat datang, {state.c_user.username}!")
@@ -80,9 +82,8 @@ def login(state: State) -> int:
             else:
                 print("Password salah")
                 return 1
-        i += 1
-            
-    print("Username tidak terdaftar!")
+    
+    print("Username tidak terdaftar!")                
     return 1
 
 def logout(state: State) -> int:

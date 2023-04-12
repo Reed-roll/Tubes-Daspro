@@ -31,12 +31,15 @@ def save(state: State, dir: str) -> int:
             os.mkdir(path)
     return 0
 
+# ambil path program yang dijalankan
 root = os.path.dirname(os.path.realpath(__file__))
 
+# ambil argumen folder yang akan dibaca datanya
 parser = argparse.ArgumentParser()
 parser.add_argument('folder', help="nama folder yang berisi data program",
                     nargs='?' ,default="")
 
+# cek apakah argumen folder yanag diberi valid
 args = parser.parse_args()
 if args.folder == "":
     print("Tidak ada nama folder yang diberikan!\n")
@@ -51,37 +54,40 @@ if not os.path.isdir(dir):
 # mulai baca data
 print("Loading...")
 
-# array pengguna
-users = [USER_MARK for i in range(MAX_USER)]
+# tabel pengguna
+t_user = TabUser([USER_MARK for i in range(MAX_USER)], 0)
 
-# array candi
-temples = [TEMPLE_MARK for i in range(MAX_TEMPLE)] 
+# tabel candi
+t_temple = TabTemple([TEMPLE_MARK for i in range(MAX_TEMPLE)], 0) 
 
-# array bahan-bahan bangunan
-materials  = DEFAULT_MATERIALS
+# tabel bahan-bahan bangunan
+t_material  = DEFAULT_TAB_MATERIALS
 
 # data pengguna
-t_users = get_arr("user.csv", MAX_USER)
+temp_users = get_arr("user.csv", MAX_USER)
 i = 0
-while t_users[i][0] != "__EOF__":
-    users[i] = User(t_users[i][0], t_users[i][1], t_users[i][2])
+while temp_users[i][0] != "__EOF__":
+    t_user.users[i] = User(temp_users[i][0], temp_users[i][1], temp_users[i][2])
     i += 1
+t_user.length = i
         
 # data candi
-t_temples = get_arr("candi.csv", MAX_TEMPLE)
+temp_temples = get_arr("candi.csv", MAX_TEMPLE)
 i = 0
-while t_temples[i][0] != "__EOF__":
-    temples[i] = Temple(int(t_temples[i][0]), t_temples[i][1],
-                        int(t_temples[i][2]), int(t_temples[i][3]), int(t_temples[i][4]))
+while temp_temples[i][0] != "__EOF__":
+    t_temple.temples[i] = Temple(int(temp_temples[i][0]), temp_temples[i][1],
+                            int(temp_temples[i][2]), int(temp_temples[i][3]), int(temp_temples[i][4]))
     i += 1
+t_temple.length = i
 
 # data bahan-bahan
-
-t_materials = get_arr("bahan_bangunan.csv", MAX_TEMPLE)
+temp_materials = get_arr("bahan_bangunan.csv", MAX_TEMPLE)
 i = 0
-while t_materials[i][0] != "__EOF__":
-    materials[i] = Material(t_materials[i][0], t_materials[i][1], int(t_materials[i][2]))
+while temp_materials[i][0] != "__EOF__":
+    t_material.materials[i] = Material(temp_materials[i][0], 
+                                       temp_materials[i][1], int(temp_materials[i][2]))
     i += 1
+t_material.length = i
 
 print("Selamat datang di program \"Manajerial Candi\"")
 print("Silahkan masukkan username Anda")
