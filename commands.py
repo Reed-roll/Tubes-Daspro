@@ -35,11 +35,6 @@ def run(command: str, state: State) -> int:
         return 1
 
 def save(state: State) -> int:
-    if not (state.c_user.role == "bandung_bondowoso"
-            or state.c_user.role == "roro_jonggrang"):
-        print("Akses command terbatas pada Bandung dan Roro!")
-        return 1
-    
     dir = input("Masukkan nama folder: ")
     return data.save(state, dir)
     
@@ -54,7 +49,7 @@ def exit(state: State) -> None:
             break
     
     if to_save:
-        data.save(state, data.dir)
+        data.save(state, "")
         quit()
     else:
         quit()

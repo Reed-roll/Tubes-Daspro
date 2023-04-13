@@ -14,7 +14,7 @@ Asisten: Malik Akbar Hashemi Rafsanjani (13520105)
 2. Ridho - F03-F05
 3. Axel - F11-F12
 4. Akhdan - F09-F10
-5. Avila - F14, F16
+5. Avila - F01-F02, F13-F14, F16
 
 ## Progress:
 1. Login [x]
@@ -30,9 +30,9 @@ Asisten: Malik Akbar Hashemi Rafsanjani (13520105)
 11. Hancurkan Candi [p]
 12. Ayam Berkokok [p]
 13. Load [x]
-14. Save [p]
+14. Save [x]
 15. Help [ ]
-16. Exit [p]
+16. Exit [x]
 
 ## Batasan:
 1. Menggunakan bahasa Python 3.9+
