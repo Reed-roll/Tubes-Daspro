@@ -100,27 +100,38 @@ def bangun(state : State) :
         batu = random.randint(1,5)
         air = random.randint(1,5)
         
-        if pasir <= state.materials[0].quantity and batu <= state.materials[1].quantity and air <= state.materials[2].quantity:
+        if pasir <= state.t_material.materials[0].quantity and batu <= state.t_material.materials[1].quantity and air <= state.t_material.materials[2].quantity:
             print("Candi berhasil di bangun.")
-            lanjut = True
-            i = 0
-            while lanjut == True :
-                if(state.temples[i].id == -1) and i <= 99:
-                    state.temples[i] = Temple(i + 1, state.c_user.username,pasir,batu,air)
-                    lanjut = False
-                elif (i > 99):
-                    lanjut = False
-                else:
-                    i += 1
-            
-            print("Sisa candi yang perlu di bangun : ",99-i,".")
+            idx = 0
+            if(state.t_temple.length < 100):
+                for d in range(1,state.t_temple.length + 1):
+                    ada = False
+                    for i in range(state.t_temple.length):
+                        if(d == state.t_temple.temples[i].id):
+                            ada = True
+                            break
+                    
+                    if not ada :
+                        idx = d
+                        break
+                    else:
+                        idx = d + 1
+                    
+                if(idx == 0):
+                    idx = 1
+                
+                if(state.t_temple.temples[state.t_temple.length].id == -1) and state.t_temple.length <= 99 :
+                    state.t_temple.temples[state.t_temple.length] = Temple(idx, state.c_user.username,pasir,batu,air)
+                    state.t_temple.length += 1
+
+            print("Sisa candi yang perlu di bangun : ",100-state.t_temple.length,".")
             for k in range(3):
-                if(state.materials[k].name == "pasir"):
-                    state.materials[k].quantity -= pasir
-                elif(state.materials[k].name == "batu"):
-                    state.materials[k].quantity -= batu
-                elif(state.materials[k].name == "air"):
-                    state.materials[k].quantity -= air
+                if(state.t_material.materials[k].name == "pasir"):
+                    state.t_material.materials[k].quantity -= pasir
+                elif(state.t_material.materials[k].name == "batu"):
+                    state.t_material.materials[k].quantity -= batu
+                elif(state.t_material.materials[k].name == "air"):
+                    state.t_material.materials[k].quantity -= air
             return 0
         else:
             print("Bahan bangunan tidak mencukupi.")
@@ -138,12 +149,12 @@ def kumpul(state : State) :
 
         print("Jin menemukan ",pasir," pasir ", batu , " batu, dan ", air , " air.")
         for k in range(3):
-            if(state.materials[k].name == "pasir"):
-                state.materials[k].quantity += pasir
-            elif(state.materials[k].name == "batu"):
-                state.materials[k].quantity += batu                
-            elif(state.materials[k].name == "air"):
-                state.materials[k].quantity += air
+            if(state.t_material.materials[k].name == "pasir"):
+                state.t_material.materials[k].quantity += pasir
+            elif(state.t_material.materials[k].name == "batu"):
+                state.t_material.materials[k].quantity += batu                
+            elif(state.t_material.materials[k].name == "air"):
+                state.t_material.materials[k].quantity += air
     else:
         print("Cuman jin pengumpul yang bisa melakukan kumpul.")
     
@@ -155,8 +166,8 @@ def batchkumpul(state : State):
         batu = 0
         air = 0
 
-        while state.users[i].role != USER_MARK.role and i < MAX_USER:
-            if(state.users[i].role == "Pengumpul"):
+        while state.t_user.users[i].role != USER_MARK.role and i < MAX_USER:
+            if(state.t_user.users[i].role == "Pengumpul"):
                 jumlah_pengumpul += 1
                 pasir += random.randint(0,5)
                 batu += random.randint(0,5)
@@ -168,12 +179,12 @@ def batchkumpul(state : State):
             print("Mengerahkan ", jumlah_pengumpul, " jin untuk mengumpulkan bahan.")
             print("Jin menemukan total ", pasir, " pasir, ", batu, " batu, dan ", air, " air.")
             for k in range(3):
-                if(state.materials[k].name == "pasir"):
-                    state.materials[k].quantity += pasir
-                elif(state.materials[k].name == "batu"):
-                    state.materials[k].quantity += batu
-                elif(state.materials[k].name == "air"):
-                    state.materials[k].quantity += air
+                if(state.t_material.materials[k].name == "pasir"):
+                    state.t_material.materials[k].quantity += pasir
+                elif(state.t_material.materials[k].name == "batu"):
+                    state.t_material.materials[k].quantity += batu
+                elif(state.t_material.materials[k].name == "air"):
+                    state.t_material.materials[k].quantity += air
 
     else: 
         print("Cuman Bondowoso yang bisa melakukan batchkumpul.")
@@ -187,12 +198,12 @@ def batchbangun(state : State):
         air = 0
         TBahan = [-1,-1,-1,-1]
         bahan = [TBahan for i in range(100)]
-        while state.users[i].role != USER_MARK.role and i < MAX_USER:
-            if(state.users[i].role == "Pembangun") :
+        while state.t_user.users[i].role != USER_MARK.role and i < MAX_USER:
+            if(state.t_user.users[i].role == "Pembangun") :
                 pasir = random.randint(1,5)
                 batu = random.randint(1,5)
                 air = random.randint(1,5)
-                bahan[jumlah_pembangun] = [pasir,batu,air,state.users[i].username]
+                bahan[jumlah_pembangun] = [pasir,batu,air,state.t_user.users[i].username]
                 jumlah_pembangun += 1
             i += 1
         
@@ -202,43 +213,53 @@ def batchbangun(state : State):
 
         if(jumlah_pembangun == 0):
             print("Kumpul gagal.Anda tidak punya jin pembangun. Silahkan summon terlebih dahulu.")
-        elif TotPasir <= state.materials[0].quantity and TotBatu <= state.materials[1].quantity and TotAir <= state.materials[2].quantity:   
+        elif TotPasir <= state.t_material.materials[0].quantity and TotBatu <= state.t_material.materials[1].quantity and TotAir <= state.t_material.materials[2].quantity:   
             print("Mengerahkan ", jumlah_pembangun, " jin untuk membangun candi dengan total bahan ", TotPasir, " pasir, " , TotBatu, " batu, dan ",TotAir, " air." )    
             print("Jin berhasil membangun total ", jumlah_pembangun, " candi.") 
             j = 0
-            z = 0
-            stop = False
-            while j < jumlah_pembangun and not stop:
-                if state.temples[z].id == -1 and z < 100:
-                    state.temples[z] = Temple(z + 1, bahan[j][3],bahan[j][0],bahan[j][1],bahan[j][2])
+            idx = 0
+            while j < jumlah_pembangun and state.t_temple.length < 100:
+                for d in range(1,state.t_temple.length + 1):
+                    ada = False
+                    for i in range(state.t_temple.length):
+                        if(d == state.t_temple.temples[i].id):
+                            ada = True
+                            break
+                    
+                    if not(ada) :
+                        idx = d
+                        break
+                    else:
+                        idx = d + 1
+                if (idx == 0):
+                    idx = 1
+                if state.t_temple.temples[state.t_temple.length].id == -1 and state.t_temple.length < 100:
+                    state.t_temple.temples[state.t_temple.length] = Temple(idx, bahan[j][3],bahan[j][0],bahan[j][1],bahan[j][2])
                     j += 1
-                if(z < 99):
-                    z += 1
-                else:
-                    stop = True
+                    state.t_temple.length += 1
             for k in range(3):
-                if(state.materials[k].name == "pasir"):
-                    state.materials[k].quantity -= pasir
-                elif(state.materials[k].name == "batu"):
-                    state.materials[k].quantity -= batu
-                elif(state.materials[k].name == "air"):
-                    state.materials[k].quantity -= air
+                if(state.t_material.materials[k].name == "pasir"):
+                    state.t_material.materials[k].quantity -= pasir
+                elif(state.t_material.materials[k].name == "batu"):
+                    state.t_material.materials[k].quantity -= batu
+                elif(state.t_material.materials[k].name == "air"):
+                    state.t_material.materials[k].quantity -= air
         else:
             print("Mengerahkan ", jumlah_pembangun, " jin untuk membangun candi dengan total bahan ", TotPasir, " pasir, " , TotBatu, " batu, dan ",TotAir, " air." )  
-            kurang_pasir = TotPasir - state.materials[0].quantity if(TotPasir > state.materials[0].quantity) else 0
-            kurang_batu =  TotBatu - state.materials[1].quantity if(TotBatu > state.materials[0].quantity) else 0
-            kurang_air = TotAir - state.materials[2].quantity if(TotAir > state.materials[0].quantity) else 0
+            kurang_pasir = TotPasir - state.t_material.materials[0].quantity if(TotPasir > state.t_material.materials[0].quantity) else 0
+            kurang_batu =  TotBatu - state.t_material.materials[1].quantity if(TotBatu > state.t_material.materials[0].quantity) else 0
+            kurang_air = TotAir - state.t_material.materials[2].quantity if(TotAir > state.t_material.materials[0].quantity) else 0
             print("Bangun gagal. Kurang ",kurang_pasir, " pasir, " , kurang_batu, " batu, dan " , kurang_air ," air.")
             
 
 def cekBahan(state : State):
-    print(state.materials[0].quantity)
-    print(state.materials[1].quantity)
-    print(state.materials[2].quantity)
+    print(state.t_material.materials[0].quantity)
+    print(state.t_material.materials[1].quantity)
+    print(state.t_material.materials[2].quantity)
 
 def cekCandi(state : State):
-    print(state.temples[0].id , " " ,state.temples[0].creator )
-    print(state.temples[1].id, " " ,state.temples[1].creator)
-    print(state.temples[2].id, " " ,state.temples[2].creator)
-    print(state.temples[3].id, " " ,state.temples[3].creator)
-    print(state.temples[4].id, " " ,state.temples[4].creator)
+    print(state.t_temple.temples[0].id , " " ,state.t_temple.temples[0].creator )
+    print(state.t_temple.temples[1].id, " " ,state.t_temple.temples[1].creator)
+    print(state.t_temple.temples[2].id, " " ,state.t_temple.temples[2].creator)
+    print(state.t_temple.temples[3].id, " " ,state.t_temple.temples[3].creator)
+    print(state.t_temple.temples[4].id, " " ,state.t_temple.temples[4].creator)
