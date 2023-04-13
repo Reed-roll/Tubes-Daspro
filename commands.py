@@ -29,7 +29,7 @@ def run(command: str, state: State) -> int:
         return cekBahan(state)
     elif command == "cekCandi":
         return cekCandi(state)
-    # lanjutkan spam elif :v
+    # lanjutkan spam elif 
     else:
         print("Perintah tidak diketahui")
         return 1
