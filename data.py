@@ -51,10 +51,12 @@ def save(state: State, dir: str) -> int:
                             str(state.t_material.materials[i].quantity)], 3, ";")
                  for i in range(state.t_material.length)]
     
+    dir = "save/" + dir
     dir_count = util.count_sep(dir, "/")
     dir_names = util.split(dir, "/")
 
-    path = os.path.join(root, "save")
+    path = os.path.join(root)
+
     for i in range(dir_count):
         path = os.path.join(path, dir_names[i])
         if not os.path.isdir(path):

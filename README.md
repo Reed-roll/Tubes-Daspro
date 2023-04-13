@@ -22,9 +22,9 @@ Asisten: Malik Akbar Hashemi Rafsanjani (13520105)
 3. Summon Jin [p]
 4. Hilangkan Jin [p]
 5. Ubah Tipe Jin [p]
-6. Jin Pembangun [p]
-7. Jin Pengumpul [p]
-8. Batch Kumpul/Bangun [p]
+6. Jin Pembangun [x]
+7. Jin Pengumpul [x]
+8. Batch Kumpul/Bangun [x]
 9. Ambil Laporan Jin [p]
 10. Ambil Laporan Candi [p]
 11. Hancurkan Candi [p]
@@ -33,6 +33,13 @@ Asisten: Malik Akbar Hashemi Rafsanjani (13520105)
 14. Save [x]
 15. Help [ ]
 16. Exit [x]
+
+## Bonus:
+1. Random Number Generator [ ]
+2. Rekursif [ ]
+3. Typing [p]
+4. Undo [ ]
+5. Kreativitas [ ]
 
 ## Batasan:
 1. Menggunakan bahasa Python 3.9+
