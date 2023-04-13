@@ -12,23 +12,67 @@ def get_arr(file: str, max: int) -> list[list[str]]:
         for line in f:
             res[i] = util.split(line, ";")
             i += 1
-            
     return res
 
+def write(filename: str, los: list[str], mark: str, length: int, header: str):
+    text = header + "\n"
+    for i in range(length):
+        if los[i] != mark:
+            text = text + los[i] + "\n"
+
+    with open(filename, "w") as f:
+        f.write(text)
 
 def save(state: State, dir: str) -> int:
     # low level saving for F14 and F16
     # TODO: Menyimpan state dalam file
     print("Saving ...")
+
+    users = [util.merge_n([state.t_user.users[i].username,
+                        state.t_user.users[i].password,
+                        state.t_user.users[i].role], 3, ";")
+             for i in range(state.t_user.length)]
+    
+    u_mark = USER_MARK.username + ";" + USER_MARK.password + ";" + USER_MARK.role
+    
+    temples = [util.merge_n([str(state.t_temple.temples[i].id),
+                        state.t_temple.temples[i].creator,
+                        str(state.t_temple.temples[i].sand),
+                        str(state.t_temple.temples[i].rock),
+                        str(state.t_temple.temples[i].water)], 5, ";")
+               for i in range(state.t_temple.length)]
+    
+    t_mark = (str(TEMPLE_MARK.id) + ";" + TEMPLE_MARK.creator + ";" +
+            str(TEMPLE_MARK.sand) + ";" + str(TEMPLE_MARK.rock) + ";" +
+            str(TEMPLE_MARK.water))
+
+    materials = [util.merge_n([state.t_material.materials[i].name,
+                            state.t_material.materials[i].description,
+                            str(state.t_material.materials[i].quantity)], 3, ";")
+                 for i in range(state.t_material.length)]
+    
     dir_count = util.count_sep(dir, "/")
     dir_names = util.split(dir, "/")
 
-    path = root
+    path = os.path.join(root, "save")
     for i in range(dir_count):
         path = os.path.join(path, dir_names[i])
         if not os.path.isdir(path):
             print(f"Membuat folder {path} ...")
             os.mkdir(path)
+        
+    write(os.path.join(path, "user.csv"),
+          users, u_mark, state.t_user.length,
+          "username;password;role")
+    
+    write(os.path.join(path, "candi.csv"),
+          temples, t_mark, state.t_temple.length,
+          "id;pembuat;pasir;batu;air")
+          
+    write(os.path.join(path, "bahan_bangunan.csv"),
+          materials, "", state.t_material.length,
+          "nama;deskripsi;jumlah")
+    
     return 0
 
 # ambil path program yang dijalankan
