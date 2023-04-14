@@ -19,9 +19,9 @@ Asisten: Malik Akbar Hashemi Rafsanjani (13520105)
 ## Progress:
 1. Login [x]
 2. Logout [x]
-3. Summon Jin [p]
-4. Hilangkan Jin [p]
-5. Ubah Tipe Jin [p]
+3. Summon Jin [x]
+4. Hilangkan Jin [x]
+5. Ubah Tipe Jin [x]
 6. Jin Pembangun [x]
 7. Jin Pengumpul [x]
 8. Batch Kumpul/Bangun [x]
