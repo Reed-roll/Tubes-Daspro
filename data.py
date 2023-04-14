@@ -127,13 +127,12 @@ while temp_temples[i][0] != "__EOF__":
 t_temple.length = i
 
 # data bahan-bahan
-temp_materials = get_arr("bahan_bangunan.csv", MAX_TEMPLE)
+temp_materials = get_arr("bahan_bangunan.csv", MATERIALS_COUNT)
 i = 0
 while temp_materials[i][0] != "__EOF__":
     t_material.materials[i] = Material(temp_materials[i][0], 
                                        temp_materials[i][1], int(temp_materials[i][2]))
     i += 1
-t_material.length = i
 
 print("Selamat datang di program \"Manajerial Candi\"")
 print("Silahkan masukkan username Anda")
