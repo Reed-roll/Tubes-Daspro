@@ -242,16 +242,16 @@ def batchbangun(state : State):
                     state.t_temple.length += 1
             for k in range(3):
                 if(state.t_material.materials[k].name == "pasir"):
-                    state.t_material.materials[k].quantity -= pasir
+                    state.t_material.materials[k].quantity -= TotPasir
                 elif(state.t_material.materials[k].name == "batu"):
-                    state.t_material.materials[k].quantity -= batu
+                    state.t_material.materials[k].quantity -= TotBatu
                 elif(state.t_material.materials[k].name == "air"):
-                    state.t_material.materials[k].quantity -= air
+                    state.t_material.materials[k].quantity -= TotAir
         else:
             print("Mengerahkan ", jumlah_pembangun, " jin untuk membangun candi dengan total bahan ", TotPasir, " pasir, " , TotBatu, " batu, dan ",TotAir, " air." )  
             kurang_pasir = TotPasir - state.t_material.materials[0].quantity if(TotPasir > state.t_material.materials[0].quantity) else 0
-            kurang_batu =  TotBatu - state.t_material.materials[1].quantity if(TotBatu > state.t_material.materials[0].quantity) else 0
-            kurang_air = TotAir - state.t_material.materials[2].quantity if(TotAir > state.t_material.materials[0].quantity) else 0
+            kurang_batu =  TotBatu - state.t_material.materials[1].quantity if(TotBatu > state.t_material.materials[1].quantity) else 0
+            kurang_air = TotAir - state.t_material.materials[2].quantity if(TotAir > state.t_material.materials[2].quantity) else 0
             print("Bangun gagal. Kurang ",kurang_pasir, " pasir, " , kurang_batu, " batu, dan " , kurang_air ," air.")
             
 
