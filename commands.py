@@ -1,7 +1,7 @@
 import data
 from base import *
-import random
-from util import hitungJumlah
+# import random
+from util import hitungJumlah, get_cycle, cycle_length
 
 def run(command: str, state: State) -> int:
     # menerima command yang diberikan dan state program
@@ -37,11 +37,25 @@ def run(command: str, state: State) -> int:
         return cekBahan(state)
     elif command == "cekCandi":
         return cekCandi(state)
+    elif command == "rand":
+        rint = get_randint(lcg, 0, 5)
+        print(rint)
+        return rint
     # lanjutkan spam elif 
     else:
         print("Perintah tidak diketahui")
 
         return -99
+
+# LCG
+lcg = LCG(get_cycle(35, 21, 31, 100), cycle_length(0, 21, 31, 100), 0)
+
+def get_randint(lcg: LCG, min: int, max: int) -> int:
+    while True:
+        lcg.index = (lcg.index + 1) % lcg.length
+        res = lcg.cycle[lcg.index] % (max + 1)
+        if res >= min: break
+    return res
 
 def save(state: State) -> int:
     dir = input("Masukkan nama folder: ")
@@ -100,9 +114,12 @@ def logout(state: State) -> int:
 
 def bangun(state : State) :
     if(state.c_user != "Bondowoso") and (state.c_user != "Roro") and state.c_user != ANON and state.c_user.role == "Pembangun":
-        pasir = random.randint(1,5)
-        batu = random.randint(1,5)
-        air = random.randint(1,5)
+        # pasir = random.randint(1,5)
+        # batu = random.randint(1,5)
+        # air = random.randint(1,5)
+        pasir = get_randint(lcg, 1, 5)
+        batu = get_randint(lcg, 1, 5)
+        air = get_randint(lcg, 1, 5)
         
         if pasir <= state.t_material.materials[0].quantity and batu <= state.t_material.materials[1].quantity and air <= state.t_material.materials[2].quantity:
             print("Candi berhasil di bangun.")
@@ -147,9 +164,13 @@ def bangun(state : State) :
 
 def kumpul(state : State) :
     if(state.c_user != "Bondowoso") and (state.c_user != "Roro") and state.c_user != ANON and state.c_user.role == "Pengumpul":
-        pasir = random.randint(0,5)
-        batu = random.randint(0,5)
-        air = random.randint(0,5)
+        # pasir = random.randint(0,5)
+        # batu = random.randint(0,5)
+        # air = random.randint(0,5)
+        pasir = get_randint(lcg, 0, 5)
+        batu = get_randint(lcg, 0, 5)
+        air = get_randint(lcg, 0, 5)
+
 
         print("Jin menemukan ",pasir," pasir ", batu , " batu, dan ", air , " air.")
         for k in range(3):
@@ -173,9 +194,9 @@ def batchkumpul(state : State):
         while state.t_user.users[i].role != USER_MARK.role and i < MAX_USER:
             if(state.t_user.users[i].role == "Pengumpul"):
                 jumlah_pengumpul += 1
-                pasir += random.randint(0,5)
-                batu += random.randint(0,5)
-                air += random.randint(0,5)
+                pasir += get_randint(lcg, 0, 5)
+                batu += get_randint(lcg, 0, 5)
+                air += get_randint(lcg, 0, 5)
             i += 1
         if(jumlah_pengumpul == 0):
             print("Kumpul gagal. Anda tidak punya jin pengumpul. Silahkan summon terlebih dahulu.")
@@ -204,9 +225,9 @@ def batchbangun(state : State):
         bahan = [TBahan for i in range(100)]
         while state.t_user.users[i].role != USER_MARK.role and i < MAX_USER:
             if(state.t_user.users[i].role == "Pembangun") :
-                pasir = random.randint(1,5)
-                batu = random.randint(1,5)
-                air = random.randint(1,5)
+                pasir = get_randint(lcg, 1, 5)
+                batu = get_randint(lcg, 1, 5)
+                air = get_randint(lcg, 1, 5)
                 bahan[jumlah_pembangun] = [pasir,batu,air,state.t_user.users[i].username]
                 jumlah_pembangun += 1
             i += 1
