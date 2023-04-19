@@ -302,24 +302,29 @@ def summonjin(state: State):
         print("Jenis jin yang dapat dipanggil:")
         print("   (1) Pengumpul - Bertugas mengumpulkan bahan bangunan")
         print("   (2) Pembangun - Bertugas membangun candi")
+        print()
 
-        jenisjin = int(input("Masukkan nomor jenis jin yang ingin dipanggil: "))
+        jenisjin = input("Masukkan nomor jenis jin yang ingin dipanggil: ")
+        print()
 
-        if (jenisjin < 0 or jenisjin > 2): #salah input
-            print(f'Tidak ada jenis jin bernomor "{jenisjin}"! ')
-            return 1
-
-        elif jenisjin == 1:
+        if jenisjin == "1":
             tipejin = "Pengumpul"
             print(f'Memilih jin "Pengumpul".')
+            print()
 
-        else: # jenisjin == 2
+        elif jenisjin == "2":
             tipejin = "Pembangun"
             print(f'Memilih jin "Pembangun".')
+            print()
+            
+        else:  #salah input
+            print(f'Tidak ada jenis jin bernomor "{jenisjin}"! ')
+            return 1
             
         loop1 = True
         while loop1 == True:
             usernamejin = input("Masukkan username jin: ")
+
             loop2 = False
             sudahdiambil = False
 
@@ -336,12 +341,12 @@ def summonjin(state: State):
 
             while loop2 == True:
                 passwordjin = input("Masukkan password jin: ")
+                print()
 
                 if len(passwordjin) < 5 or len(passwordjin) > 25:
                     print("Password panjangnya harus 5-25 karakter!")
                 else:
-                    # state.t_user.users[indekskosong].password = passwordjin
-                    print(f'password jin berhasil menjadi "{state.t_user.users[indekskosong].password}"')
+
                     loop2 = False
                     loop1 = False
 
@@ -359,6 +364,10 @@ def hapusjin(state: State):
         
         usernamejin = input("Masukkan username jin: ")
 
+        if usernamejin == "Bondowoso" or usernamejin == "Roro":
+            print("Hanya jin yang bisa dihapus.")
+            return 1
+
         #cari indeks jin, jika tidak ada return false
         indeksjin = 0
         while state.t_user.users[indeksjin].username != usernamejin: #user dengan username jin
@@ -373,6 +382,7 @@ def hapusjin(state: State):
             
             #hilangkan jin
             state.t_user.users[indeksjin] = USER_MARK
+            state.t_user.length -= 1
             
             #menghilangkan candi
             indekscandi = 0
@@ -400,6 +410,10 @@ def ubahjin(state: State):
     if state.c_user.username == "Bondowoso":
         usernamejin = input("Masukkan username jin: ")
         
+        if usernamejin == "Bondowoso" or usernamejin == "Roro":
+            print("Hanya jin yang bisa diubah.")
+            return 1
+
         indeksjin = 0
         while state.t_user.users[indeksjin].username != usernamejin: #user dengan username jin
             if indeksjin > MAX_USER:
@@ -422,7 +436,7 @@ def ubahjin(state: State):
         if choice == "y" or choice == "Y":
             state.t_user.users[indeksjin].role = tipejinbaru
             print("Jin telah berhasil diubah.")
-        elif choice == "n" or choic == "N":
+        elif choice == "n" or choice == "N":
             return 0
         else:
             print("Input salah, silahkan ulangi lagi.")
