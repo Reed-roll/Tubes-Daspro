@@ -40,7 +40,8 @@ def run(command: str, state: State) -> int:
     # lanjutkan spam elif 
     else:
         print("Perintah tidak diketahui")
-        return 1
+
+        return -99
 
 def save(state: State) -> int:
     dir = input("Masukkan nama folder: ")

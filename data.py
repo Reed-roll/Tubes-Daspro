@@ -3,6 +3,28 @@ import util
 import argparse
 import os
 
+def length(data: list):
+    count = 0
+    for _ in data:
+        count += 1
+    return count 
+
+def append(data:list, state:State):
+    newData = ["" for i in range(length(data) + 1)]
+    for i in range(length(data)+1):
+        if(i == length(data)):
+            newData[i] = state
+        else:
+            newData[i] = data[i]
+    return newData
+
+def delete(data:list):
+    newData = ["" for i in range(length(data)-1)]
+    for i in range(length(data) -1):
+        newData[i] = data[i]
+
+    return newData
+
 def get_arr(file: str, max: int) -> list[list[str]]:
     res = [["__EOP__"] for i in range(max)]
     
