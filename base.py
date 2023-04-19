@@ -55,7 +55,12 @@ class State:
         self.t_temple = t_temple
         self.t_material = t_material
         self.c_user = c_user # current user
-    
+        
+class LCG:
+    def __init__(self, cycle: list[int], length: int, index: int) -> None:
+        self.cycle = cycle
+        self.length = length
+        self.index = index
 
 # DEFINISI KONSTANTA
 MAX_USER = 102 # 100 jin + roro + bondo
