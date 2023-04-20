@@ -15,8 +15,7 @@ def cycle_length(seed: int, a: int, c: int, mod: int) -> int:
             break
     return length
 
-def get_cycle(seed: int, a: int, c: int, mod: int) -> list[int]:
-    length = cycle_length(seed, a, c, mod)
+def get_cycle(seed: int, a: int, c: int, mod: int, length: int) -> list[int]:
     cycle = [0 for i in range(length)]     
     for i in range(length):
         cycle[i] = seed

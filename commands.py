@@ -43,7 +43,9 @@ def run(command: str, state: State) -> int:
         return 1
 
 # LCG
-lcg = LCG(get_cycle(35, 21, 31, 100), cycle_length(0, 21, 31, 100), 0)
+# lcg = LCG(get_cycle(35, 21, 31, 100), cycle_length(0, 21, 31, 100), 0)
+lcg_len = cycle_length(3, 3, 0, 28657)
+lcg = LCG(get_cycle(3, 3, 0, 28657, lcg_len), lcg_len, 0)
 
 def get_randint(lcg: LCG, min: int, max: int) -> int:
     while True:

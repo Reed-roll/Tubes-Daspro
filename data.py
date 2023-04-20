@@ -35,28 +35,6 @@ def snap(state: State, history: History) -> History:
     
     return History(stack, history.length + 1)
 
-# def length(data: list) -> int:
-#     count = 0
-#     for _ in data:
-#         count += 1
-#     return count 
-
-# def append(data:list, state:State) -> list[State]:
-#     newData = ["" for i in range(length(data) + 1)]
-#     for i in range(length(data)+1):
-#         if(i == length(data)):
-#             newData[i] = state
-#         else:
-#             newData[i] = data[i]
-#     return newData
-
-# def delete(data:list) -> list[State]:
-#     newData = ["" for i in range(length(data)-1)]
-#     for i in range(length(data) -1):
-#         newData[i] = data[i]
-
-#     return newData
-
 def get_arr(file: str, max: int) -> list[list[str]]:
     res = [["__EOP__"] for i in range(max)]
     
@@ -170,12 +148,6 @@ for i in range(MAX_USER):
         t_user.users[i] = User(temp_users[i][0], temp_users[i][1], temp_users[i][2])
         t_user.length += 1
 
-# i = 0
-# while temp_users[i][0] != "__EOP__":
-#     t_user.users[i] = User(temp_users[i][0], temp_users[i][1], temp_users[i][2])
-#     i += 1
-# t_user.length = i
-        
 # data candi
 temp_temples = get_arr("candi.csv", MAX_TEMPLE)
 for i in range(MAX_TEMPLE):
@@ -183,13 +155,6 @@ for i in range(MAX_TEMPLE):
         t_temple.temples[i] = Temple(int(temp_temples[i][0]), temp_temples[i][1],
                             int(temp_temples[i][2]), int(temp_temples[i][3]), int(temp_temples[i][4]))
         t_temple.length += 1
-
-# i = 0
-# while temp_temples[i][0] != "__EOP__":
-#     t_temple.temples[i] = Temple(int(temp_temples[i][0]), temp_temples[i][1],
-#                             int(temp_temples[i][2]), int(temp_temples[i][3]), int(temp_temples[i][4]))
-#     i += 1
-# t_temple.length = i
 
 # data bahan-bahan
 temp_mats = get_arr("bahan_bangunan.csv", MATERIALS_COUNT)
@@ -200,11 +165,5 @@ for i in range(MATERIALS_COUNT):
             t_material.materials[j] = Material(temp_mats[i][0], 
                                         temp_mats[i][1], int(temp_mats[i][2]))
     
-# i = 0
-# while temp_materials[i][0] != "__EOP__":
-#     t_material.materials[i] = Material(temp_materials[i][0], 
-#                                        temp_materials[i][1], int(temp_materials[i][2]))
-#     i += 1
-
 print("Selamat datang di program \"Manajerial Candi\"")
 print("Silahkan masukkan username Anda")
