@@ -79,7 +79,7 @@ def merge_n(los: list[str], n: int, sep: str) -> str:
         res = res + sep + los[i]
     return res
 
-def hitungJumlah(data : list,index : int,n : int):
+def hitungJumlah (data : list,index : int,n : int) -> int:
     jumlah = 0
     for i in range(n):
         jumlah += data[i][index]

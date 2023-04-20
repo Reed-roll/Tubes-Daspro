@@ -44,8 +44,7 @@ def run(command: str, state: State) -> int:
     # lanjutkan spam elif 
     else:
         print("Perintah tidak diketahui")
-
-        return -99
+        return 1
 
 # LCG
 lcg = LCG(get_cycle(35, 21, 31, 100), cycle_length(0, 21, 31, 100), 0)
@@ -112,7 +111,7 @@ def logout(state: State) -> int:
     state.c_user = ANON
     return 0
 
-def bangun(state : State) :
+def bangun(state : State) -> int:
     if(state.c_user != "Bondowoso") and (state.c_user != "Roro") and state.c_user != ANON and state.c_user.role == "Pembangun":
         # pasir = random.randint(1,5)
         # batu = random.randint(1,5)
@@ -162,7 +161,7 @@ def bangun(state : State) :
         print("Cuman jin pembangun yang bisa membangun candi")
         return 1
 
-def kumpul(state : State) :
+def kumpul(state : State) -> int:
     if(state.c_user != "Bondowoso") and (state.c_user != "Roro") and state.c_user != ANON and state.c_user.role == "Pengumpul":
         # pasir = random.randint(0,5)
         # batu = random.randint(0,5)
@@ -170,7 +169,6 @@ def kumpul(state : State) :
         pasir = get_randint(lcg, 0, 5)
         batu = get_randint(lcg, 0, 5)
         air = get_randint(lcg, 0, 5)
-
 
         print("Jin menemukan ",pasir," pasir ", batu , " batu, dan ", air , " air.")
         for k in range(3):
@@ -180,10 +178,12 @@ def kumpul(state : State) :
                 state.t_material.materials[k].quantity += batu                
             elif(state.t_material.materials[k].name == "air"):
                 state.t_material.materials[k].quantity += air
+        return 0
     else:
         print("Cuman jin pengumpul yang bisa melakukan kumpul.")
+        return 1
     
-def batchkumpul(state : State):
+def batchkumpul(state : State) -> int:
     if(state.c_user.username == "Bondowoso"):
         i = 0
         jumlah_pengumpul = 0
@@ -200,6 +200,7 @@ def batchkumpul(state : State):
             i += 1
         if(jumlah_pengumpul == 0):
             print("Kumpul gagal. Anda tidak punya jin pengumpul. Silahkan summon terlebih dahulu.")
+            return 1
         else:
             print("Mengerahkan ", jumlah_pengumpul, " jin untuk mengumpulkan bahan.")
             print("Jin menemukan total ", pasir, " pasir, ", batu, " batu, dan ", air, " air.")
@@ -210,11 +211,13 @@ def batchkumpul(state : State):
                     state.t_material.materials[k].quantity += batu
                 elif(state.t_material.materials[k].name == "air"):
                     state.t_material.materials[k].quantity += air
+            return 0
 
     else: 
         print("Cuman Bondowoso yang bisa melakukan batchkumpul.")
+        return 1
 
-def batchbangun(state : State):
+def batchbangun(state : State) -> int:
     if(state.c_user.username == "Bondowoso"):
         i = 0
         jumlah_pembangun = 0
@@ -238,6 +241,7 @@ def batchbangun(state : State):
 
         if(jumlah_pembangun == 0):
             print("Kumpul gagal.Anda tidak punya jin pembangun. Silahkan summon terlebih dahulu.")
+            return 1
         elif TotPasir <= state.t_material.materials[0].quantity and TotBatu <= state.t_material.materials[1].quantity and TotAir <= state.t_material.materials[2].quantity:   
             print("Mengerahkan ", jumlah_pembangun, " jin untuk membangun candi dengan total bahan ", TotPasir, " pasir, " , TotBatu, " batu, dan ",TotAir, " air." )    
             print("Jin berhasil membangun total ", jumlah_pembangun, " candi.") 
@@ -269,32 +273,38 @@ def batchbangun(state : State):
                     state.t_material.materials[k].quantity -= TotBatu
                 elif(state.t_material.materials[k].name == "air"):
                     state.t_material.materials[k].quantity -= TotAir
+            return 0
         else:
             print("Mengerahkan ", jumlah_pembangun, " jin untuk membangun candi dengan total bahan ", TotPasir, " pasir, " , TotBatu, " batu, dan ",TotAir, " air." )  
             kurang_pasir = TotPasir - state.t_material.materials[0].quantity if(TotPasir > state.t_material.materials[0].quantity) else 0
             kurang_batu =  TotBatu - state.t_material.materials[1].quantity if(TotBatu > state.t_material.materials[1].quantity) else 0
             kurang_air = TotAir - state.t_material.materials[2].quantity if(TotAir > state.t_material.materials[2].quantity) else 0
             print("Bangun gagal. Kurang ",kurang_pasir, " pasir, " , kurang_batu, " batu, dan " , kurang_air ," air.")
-            
+            return 1
+    else:
+        print("Cuman Bondowoso yang bisa melakukan batchbangun.")
+        return 1  
 
-def cekBahan(state : State):
+def cekBahan(state : State) -> int:
     print(state.t_material.materials[0].quantity)
     print(state.t_material.materials[1].quantity)
     print(state.t_material.materials[2].quantity)
-
-def cekCandi(state : State):
+    return 0
+    
+def cekCandi(state : State) -> int:
     print(state.t_temple.temples[0].id , " " ,state.t_temple.temples[0].creator )
     print(state.t_temple.temples[1].id, " " ,state.t_temple.temples[1].creator)
     print(state.t_temple.temples[2].id, " " ,state.t_temple.temples[2].creator)
     print(state.t_temple.temples[3].id, " " ,state.t_temple.temples[3].creator)
     print(state.t_temple.temples[4].id, " " ,state.t_temple.temples[4].creator)
+    return 0
 
-def cekUser (state : State):
+def cekUser (state : State) -> int:
     for i in range(state.t_user.length):
         print(state.t_user.users[i].username," " ,state.t_user.users[i].role)
-    
+    return 0
 
-def summonjin(state: State):
+def summonjin(state: State) -> int:
     if state.c_user.username != "Bondowoso":
         print("Hanya Bondowoso yang bisa melakukan summon jin.")
         return 1
@@ -379,8 +389,9 @@ def summonjin(state: State):
         print("Membacakan mantra...")
         print()
         print(f'jin "{usernamejin}" berhasil dipanggil!')
+        return 0
         
-def hapusjin(state: State):
+def hapusjin(state: State) -> int:
     if state.c_user.username == "Bondowoso":
         
         usernamejin = input("Masukkan username jin: ")
@@ -418,7 +429,7 @@ def hapusjin(state: State):
             return 0
         
         elif choice == "n" or choice =="N":
-            return 0
+            return 1
         
         else:
             print("Input salah, silahkan ulangi lagi.")
@@ -457,8 +468,9 @@ def ubahjin(state: State):
         if choice == "y" or choice == "Y":
             state.t_user.users[indeksjin].role = tipejinbaru
             print("Jin telah berhasil diubah.")
-        elif choice == "n" or choice == "N":
             return 0
+        elif choice == "n" or choice == "N":
+            return 1
         else:
             print("Input salah, silahkan ulangi lagi.")
             return 1
