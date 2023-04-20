@@ -1,5 +1,4 @@
 # berisi fungsi2 utility untuk pemrosesan data secara general
-# from collections.abc import Generator
 
 # LCG versi stream -> ribet di notal
 # def lcg(seed: int, a: int, c: int, mod: int):

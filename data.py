@@ -3,27 +3,59 @@ import util
 import argparse
 import os
 
-def length(data: list) -> int:
-    count = 0
-    for _ in data:
-        count += 1
-    return count 
+def copy(state: State) -> State:
+    t_user = TabUser([User(state.t_user.users[i].username,
+                    state.t_user.users[i].password,
+                    state.t_user.users[i].role) 
+                    for i in range(MAX_USER)],
+                    state.t_user.length)
 
-def append(data:list, state:State) -> list[State]:
-    newData = ["" for i in range(length(data) + 1)]
-    for i in range(length(data)+1):
-        if(i == length(data)):
-            newData[i] = state
-        else:
-            newData[i] = data[i]
-    return newData
+    t_temple = TabTemple([Temple(state.t_temple.temples[i].id,
+                        state.t_temple.temples[i].creator,
+                        state.t_temple.temples[i].sand,
+                        state.t_temple.temples[i].rock,
+                        state.t_temple.temples[i].water) 
+                        for i in range(MAX_TEMPLE)],
+                        state.t_temple.length)
 
-def delete(data:list) -> list[State]:
-    newData = ["" for i in range(length(data)-1)]
-    for i in range(length(data) -1):
-        newData[i] = data[i]
+    t_mat = TabMaterial([Material(state.t_material.materials[i].name,
+                        state.t_material.materials[i].description,
+                        state.t_material.materials[i].quantity) 
+                        for i in range(MATERIALS_COUNT)],
+                        state.t_material.length)
+    
+    # undo tidak akan me-logout bondo
+    return State(t_user, t_temple, t_mat, state.c_user)
 
-    return newData
+def snap(state: State, history: History) -> History:
+    stack = [BASE_STATE for i in range(history.length + 1)]
+    for i in range(1, history.length + 1):
+        stack[i] = history.stack[i - 1]
+    stack[0] = state
+    
+    return History(stack, history.length + 1)
+
+# def length(data: list) -> int:
+#     count = 0
+#     for _ in data:
+#         count += 1
+#     return count 
+
+# def append(data:list, state:State) -> list[State]:
+#     newData = ["" for i in range(length(data) + 1)]
+#     for i in range(length(data)+1):
+#         if(i == length(data)):
+#             newData[i] = state
+#         else:
+#             newData[i] = data[i]
+#     return newData
+
+# def delete(data:list) -> list[State]:
+#     newData = ["" for i in range(length(data)-1)]
+#     for i in range(length(data) -1):
+#         newData[i] = data[i]
+
+#     return newData
 
 def get_arr(file: str, max: int) -> list[list[str]]:
     res = [["__EOP__"] for i in range(max)]
@@ -129,7 +161,7 @@ t_user = TabUser([USER_MARK for i in range(MAX_USER)], 0)
 t_temple = TabTemple([TEMPLE_MARK for i in range(MAX_TEMPLE)], 0) 
 
 # tabel bahan-bahan bangunan
-t_material  = DEFAULT_TAB_MATERIALS
+t_material  = TabMaterial(DEFAULT_MATERIALS, MATERIALS_COUNT)
 
 # data pengguna
 temp_users = get_arr("user.csv", MAX_USER)

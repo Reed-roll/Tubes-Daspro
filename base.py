@@ -56,6 +56,11 @@ class State:
         self.t_material = t_material
         self.c_user = c_user # current user
         
+class History:
+    def __init__(self, stack: list[State], length: int) -> None:
+        self.stack = stack
+        self.length = length
+
 class LCG:
     def __init__(self, cycle: list[int], length: int, index: int) -> None:
         self.cycle = cycle
@@ -76,4 +81,8 @@ DEFAULT_MATERIALS = [Material("pasir", "pasir pantai Nyi Roro Kidul", 0),
                      Material("batu", "batu dari Mars", 0),
                      Material("air", "Nyi Roro Kidul bath water (air Laut Selatan)", 0)]
 MATERIALS_COUNT = 3 # untuk for loop
-DEFAULT_TAB_MATERIALS = TabMaterial(DEFAULT_MATERIALS, MATERIALS_COUNT)
+
+BASE_STATE = State(TabUser([USER_MARK for i in range(MAX_USER)], MAX_USER),
+                   TabTemple([TEMPLE_MARK for i in range(MAX_TEMPLE)], MAX_TEMPLE),
+                   TabMaterial(DEFAULT_MATERIALS, MATERIALS_COUNT),
+                   ANON)

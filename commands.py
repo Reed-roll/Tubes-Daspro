@@ -37,10 +37,6 @@ def run(command: str, state: State) -> int:
         return cekBahan(state)
     elif command == "cekCandi":
         return cekCandi(state)
-    elif command == "rand":
-        rint = get_randint(lcg, 0, 5)
-        print(rint)
-        return rint
     # lanjutkan spam elif 
     else:
         print("Perintah tidak diketahui")
