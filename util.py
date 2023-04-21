@@ -6,6 +6,7 @@
 #     return (next_num, lambda : lcg(next_num, a, c, mod))
 
 def cycle_length(seed: int, a: int, c: int, mod: int) -> int:
+    # menghitung panjang siklus LCG
     seed0 = seed
     length = 0
     while True:
@@ -16,6 +17,7 @@ def cycle_length(seed: int, a: int, c: int, mod: int) -> int:
     return length
 
 def get_cycle(seed: int, a: int, c: int, mod: int, length: int) -> list[int]:
+    # menyimpan siklus LCG dalam array
     cycle = [0 for i in range(length)]     
     for i in range(length):
         cycle[i] = seed
@@ -33,12 +35,6 @@ def count_sep(s: str, sep: str) -> int:
         if s[i] == sep: count += 1
         i += 1
     return count
-
-    # count = 1
-    # for i in range(len(s)):
-    #     if s[i] == sep:
-    #         count += 1
-    # return count
 
 def split(s: str, sep: str) -> list[str]:
     # memisahkan s menjadi n bagian
@@ -58,16 +54,6 @@ def split(s: str, sep: str) -> list[str]:
             res[i] += s[j]
         j += 1
     return res
-        
-    # i = 0
-    # res = ["" for i in range(item_count)]
-    # for j in range(len(s)):
-    #     if s[j] == sep:
-    #         i += 1
-    #     elif s[j] != "\n":
-    #         res[i] += s[j]
-    
-    # return res
 
 def merge_n(los: list[str], n: int, sep: str) -> str:
     # menggabungkan suatu list of string menjadi

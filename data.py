@@ -4,6 +4,7 @@ import argparse
 import os
 
 def copy(state: State) -> State:
+    # membuat duplikat dari state
     t_user = TabUser([User(state.t_user.users[i].username,
                     state.t_user.users[i].password,
                     state.t_user.users[i].role) 
@@ -28,6 +29,7 @@ def copy(state: State) -> State:
     return State(t_user, t_temple, t_mat, state.c_user)
 
 def snap(state: State, history: History) -> History:
+    # menyimpan state dalam history
     stack = [BASE_STATE for i in range(history.length + 1)]
     for i in range(1, history.length + 1):
         stack[i] = history.stack[i - 1]
@@ -36,6 +38,7 @@ def snap(state: State, history: History) -> History:
     return History(stack, history.length + 1)
 
 def get_arr(file: str, max: int) -> list[list[str]]:
+    # membuat array dari file
     res = [["__EOP__"] for i in range(max)]
     
     with open(os.path.join(dir, file)) as f:
@@ -47,6 +50,7 @@ def get_arr(file: str, max: int) -> list[list[str]]:
     return res
 
 def write(filename: str, los: list[str], mark: str, length: int, header: str) -> None:
+    # menuliskan data pada file
     text = header + "\n"
     for i in range(length):
         if los[i] != mark:
@@ -56,10 +60,11 @@ def write(filename: str, los: list[str], mark: str, length: int, header: str) ->
         f.write(text)
 
 def save(state: State, dir: str) -> int:
-    # low level saving for F14 and F16
-    # TODO: Menyimpan state dalam file
+    # fungsi low level untuk menyimpan state
+    # digunakan oleh F14 dan F16
     print("Saving ...")
 
+    # mengubah array dan marknya ke bentuk data csv
     users = [util.merge_n([state.t_user.users[i].username,
                         state.t_user.users[i].password,
                         state.t_user.users[i].role], 3, ";")
@@ -83,7 +88,8 @@ def save(state: State, dir: str) -> int:
                             str(state.t_material.materials[i].quantity)], 3, ";")
                  for i in range(state.t_material.length)]
     
-    dir = "save/" + dir
+    # proses penyimpanan data
+    dir = SAVE_DIR + dir # default save directory
     dir_count = util.count_sep(dir, "/")
     dir_names = util.split(dir, "/")
 
@@ -109,15 +115,15 @@ def save(state: State, dir: str) -> int:
     
     return 0
 
-# ambil path program yang dijalankan
+# pembacaan directory program utama
 root = os.path.dirname(os.path.realpath(__file__))
 
-# ambil argumen folder yang akan dibaca datanya
+# pengambilan argumen
 parser = argparse.ArgumentParser()
 parser.add_argument('folder', help="nama folder yang berisi data program",
                     nargs='?' ,default="")
 
-# cek apakah argumen folder yanag diberi valid
+# validasi argumen
 args = parser.parse_args()
 if args.folder == "":
     print("Tidak ada nama folder yang diberikan!\n")
@@ -132,23 +138,18 @@ if not os.path.isdir(dir):
 # mulai baca data
 print("Loading...")
 
-# tabel pengguna
+# inisialisasi tabel
 t_user = TabUser([USER_MARK for i in range(MAX_USER)], 0)
-
-# tabel candi
 t_temple = TabTemple([TEMPLE_MARK for i in range(MAX_TEMPLE)], 0) 
-
-# tabel bahan-bahan bangunan
 t_material  = TabMaterial(DEFAULT_MATERIALS, MATERIALS_COUNT)
 
-# data pengguna
+# memasukkan data pada tabel
 temp_users = get_arr("user.csv", MAX_USER)
 for i in range(MAX_USER):
     if temp_users[i][0] != "__EOP__":
         t_user.users[i] = User(temp_users[i][0], temp_users[i][1], temp_users[i][2])
         t_user.length += 1
 
-# data candi
 temp_temples = get_arr("candi.csv", MAX_TEMPLE)
 for i in range(MAX_TEMPLE):
     if temp_temples[i][0] != "__EOP__":
@@ -156,7 +157,6 @@ for i in range(MAX_TEMPLE):
                             int(temp_temples[i][2]), int(temp_temples[i][3]), int(temp_temples[i][4]))
         t_temple.length += 1
 
-# data bahan-bahan
 temp_mats = get_arr("bahan_bangunan.csv", MATERIALS_COUNT)
 for i in range(MATERIALS_COUNT):
     name = temp_mats[i][0]

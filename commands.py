@@ -42,12 +42,13 @@ def run(command: str, state: State) -> int:
         print("Perintah tidak diketahui")
         return 1
 
-# LCG
+# Inisialisasi LCG
 # lcg = LCG(get_cycle(35, 21, 31, 100), cycle_length(0, 21, 31, 100), 0)
 lcg_len = cycle_length(3, 3, 0, 28657)
 lcg = LCG(get_cycle(3, 3, 0, 28657, lcg_len), lcg_len, 0)
 
 def get_randint(lcg: LCG, min: int, max: int) -> int:
+    # ambil angka dari LCG dan majukan index
     while True:
         lcg.index = (lcg.index + 1) % lcg.length
         res = lcg.cycle[lcg.index] % (max + 1)
@@ -89,7 +90,9 @@ def login(state: State) -> int:
     for i in range(n):
         if (users[i].username != USER_MARK.username
         and username == users[i].username):
+            # user ditemukan
             if password == users[i].password:
+                # password benar
                 state.c_user = users[i]
                 print(f"Selamat datang, {state.c_user.username}!")
                 print("Masukkan command “help” untuk daftar command yang dapat kamu panggil.")

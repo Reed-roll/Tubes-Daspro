@@ -86,3 +86,5 @@ BASE_STATE = State(TabUser([USER_MARK for i in range(MAX_USER)], MAX_USER),
                    TabTemple([TEMPLE_MARK for i in range(MAX_TEMPLE)], MAX_TEMPLE),
                    TabMaterial(DEFAULT_MATERIALS, MATERIALS_COUNT),
                    ANON)
+
+SAVE_DIR = "save/"
