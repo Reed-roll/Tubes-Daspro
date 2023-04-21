@@ -62,7 +62,7 @@ def write(filename: str, los: list[str], mark: str, length: int, header: str) ->
     with open(filename, "w") as f:
         f.write(text)
 
-def save(state: State, directory: str) -> int:
+def __save__(state: State, directory: str) -> int:
     # fungsi low level untuk menyimpan state
     # digunakan oleh F14 dan F16
     print("Saving ...")

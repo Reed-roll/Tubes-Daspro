@@ -57,7 +57,7 @@ def get_randint(lcg: LCG, min: int, max: int) -> int:
 
 def save(state: State) -> int:
     dir = input("Masukkan nama folder: ")
-    return data.save(state, dir)
+    return data.__save__(state, dir)
     
 def exit(state: State) -> None:
     while True:
@@ -70,7 +70,7 @@ def exit(state: State) -> None:
             break
     
     if to_save:
-        data.save(state, "")
+        data.__save__(state, "")
         quit()
     else:
         quit()
