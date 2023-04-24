@@ -367,8 +367,6 @@ def summonjin(state: State) -> int:
             if sudahdiambil == True:
                 print(f'Username "{usernamejin}" sudah diambil!')
             else:
-                # state.t_user.users[indekskosong].username = usernamejin
-                # print(f'username jin berhasil menjadi "{state.t_user.users[indekskosong].username}"')
                 loop2 = True
 
             while loop2 == True:
@@ -389,7 +387,7 @@ def summonjin(state: State) -> int:
         print("Menyerahkan sesajen...")
         print("Membacakan mantra...")
         print()
-        print(f'jin "{usernamejin}" berhasil dipanggil!')
+        print(f'jin "{state.t_user.users[indekskosong].username}" berhasil dipanggil!')
         return 0
         
 def hapusjin(state: State) -> int:
@@ -401,13 +399,17 @@ def hapusjin(state: State) -> int:
             print("Hanya jin yang bisa dihapus.")
             return 1
 
-        #cari indeks jin, jika tidak ada return false
-        indeksjin = 0
-        while state.t_user.users[indeksjin].username != usernamejin: #user dengan username jin
-            if indeksjin > state.t_user.length:
-                print(f'Tidak ada jin dengan username tersebut.')
-                return 1
-            indeksjin += 1 
+        adaUser = False
+        for indeksjin in range(state.t_user.length):
+            if (state.t_user.users[indeksjin].username != USER_MARK.username 
+            and state.t_user.users[indeksjin].username  == usernamejin):
+                # user ditemukan
+                adaUser = True
+                break
+
+        if adaUser == False:
+            print("tidak ada jin dengan username tersebut")
+            return 1
             
         choice = input(f"Apakah Anda yakin ingin menghapus jin dengan username {usernamejin} (Y/N)? ")
         
@@ -447,12 +449,17 @@ def ubahjin(state: State):
             print("Hanya jin yang bisa diubah.")
             return 1
 
-        indeksjin = 0
-        while state.t_user.users[indeksjin].username != usernamejin: #user dengan username jin
-            if indeksjin > MAX_USER:
-                print(f'Tidak ada jin dengan username tersebut.')
-                return 1
-            indeksjin += 1 
+        adaUser = False
+        for indeksjin in range(state.t_user.length):
+            if (state.t_user.users[indeksjin].username != USER_MARK.username 
+            and state.t_user.users[indeksjin].username  == usernamejin):
+                # user ditemukan
+                adaUser = True
+                break
+
+        if adaUser == False:
+            print("tidak ada jin dengan username tersebut")
+            return 1
 
         tipejin = state.t_user.users[indeksjin].role
 
